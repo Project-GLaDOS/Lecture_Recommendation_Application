@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/sign_up.css' %}">
+
+    <title>Sign Up</title>
+</head>
+<body>
+<div class="bg_white sign_up_box">
+    <div class="bg_white page_title">
+        <span class="page_title">계정 만들기</span>
+    </div>
+
+    <form action="{% url 'account:sign_up' %}" method="post">
+        {% csrf_token %}
+
+        <div class="bg_white header header_email">
+            <span class="header">학교 메일</span>
+
+            {% if error_email %}
+            <span class="error">{{ error_email }}</span>
+            {% endif %}
+        </div>
+        <div class="bg_gray input_email">
+            <input type="text" name="user_email" placeholder="example@school.edu" value="{{ user_email }}">
+        </div>
+
+        <div class="bg_white header header_pw">
+            <span class="header">비밀번호</span>
+
+            {% if error_pw %}
+            <span class="error">{{ error_pw }}</span>
+            {% endif %}
+        </div>
+        <div class="bg_gray input_pw">
+            <input type="password" name="user_pw" placeholder="7자리 이상" value="{{ user_pw }}">
+        </div>
+
+        <div class="bg_white header header_pw_confirm">
+            <span class="header">비밀번호 확인</span>
+
+            {% if error_pw_confirm %}
+            <span class="error">{{ error_pw_confirm }}</span>
+            {% endif %}
+        </div>
+        <div class="bg_gray input_pw_confirm">
+            <input type="password" name="user_pw_confirm" value="{{ user_pw_confirm }}">
+        </div>
+
+        <input type="submit" value="회원가입">
+    </form>
+</div>
+
+</body>
+</html>

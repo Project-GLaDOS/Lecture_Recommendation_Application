@@ -1,0 +1,213 @@
+body
+{
+    font-family: "Malgun Gothic", "Arial";
+    background-color: #EBEBEB;
+}
+
+input[type=text], input[type=password]
+{
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    background-color: #EBEBEB;
+    width: 289px;
+    height: 28px;
+    font-size: 11pt;
+    color: #858585;
+    vertical-align: center;
+    horiz-align: left;
+    padding-right: 0;
+    padding-left: 10px;
+    border: 0;
+}
+input[type=submit]
+{
+    position: absolute;
+    top: 258px;
+    left: 112px;
+    background-color: #666666;
+    width: 173px;
+    height: 53px;
+    font-size: 12pt;
+    color: #999999;
+    font-weight: bold;
+    border: none;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+td
+{
+    text-align: center;
+    vertical-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+div.bg_white
+{
+    background-color: #FFFFFF;
+}
+div.bg_gray
+{
+    background-color: #EBEBEB;
+}
+div.header
+{
+    display: table;
+}
+span.header
+{
+    font-size: 8pt;
+    color: #999999;
+    text-align: left;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+span.error
+{
+    font-size: 8pt;
+    color: #CC6559;
+    text-align: left;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+span.small_btn
+{
+    font-size: 8pt;
+    color: #999999;
+    text-align: center;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.sign_in_box
+{
+    position: absolute;
+    top: 138px;
+    left: 445px;
+    width: 398px;
+    height: 447px;
+}
+
+div.page_title
+{
+    position: absolute;
+    top: 32px;
+    left: 83px;
+    width: 231px;
+    height: 38px;
+    text-align: center;
+}
+span.page_title
+{
+    font-size: 18pt;
+    width: 231px;
+    height: 38px;
+    color: #999999;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.header_email
+{
+    position: absolute;
+    top: 100px;
+    left: 49px;
+    width: 299px;
+    height: 23px;
+}
+div.input_email
+{
+    position: absolute;
+    top: 122px;
+    left: 49px;
+    width: 299px;
+    height: 38px;
+}
+div.header_pw
+{
+    position: absolute;
+    top: 170px;
+    left: 49px;
+    width: 299px;
+    height: 23px;
+}
+div.input_pw
+{
+    position: absolute;
+    top: 192px;
+    left: 49px;
+    width: 299px;
+    height: 38px;
+}
+
+div.find_btns
+{
+    position: absolute;
+    top: 339px;
+    left: 129px;
+}
+div.find_email_btn
+{
+    width: 65px;
+    height: 23px;
+    display: table;
+}
+a.find_email_btn
+{
+}
+span.find_email_btn
+{
+    width: 65px;
+    height: 23px;
+}
+div.find_btns_seperation
+{
+    width: 1px;
+    height: 11px;
+    background-color: #999999;
+    opacity: 30%;
+}
+div.find_pw_btn
+{
+    width: 74px;
+    height: 23px;
+    display: table;
+}
+a.find_pw_btn
+{
+}
+span.find_pw_btn
+{
+    width: 74px;
+    height: 23px;
+}
+
+div.sign_up_btn
+{
+    position: absolute;
+    top: 382px;
+    left: 167px;
+    width: 62px;
+    height: 23px;
+    display: table;
+    text-align: center;
+}
+a.sign_up_btn
+{
+
+}
+span.sign_up_btn
+{
+    width: 62px;
+    height: 23px;
+    display: table-cell;
+    vertical-align: middle;
+}

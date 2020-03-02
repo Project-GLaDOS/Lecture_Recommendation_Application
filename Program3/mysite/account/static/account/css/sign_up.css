@@ -1,0 +1,168 @@
+body
+{
+    font-family: "Malgun Gothic", "Arial";
+    background-color: #EBEBEB;
+}
+
+input[type=text], input[type=password]
+{
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    background-color: #EBEBEB;
+    width: 289px;
+    height: 28px;
+    font-size: 11pt;
+    color: #858585;
+    vertical-align: center;
+    horiz-align: left;
+    padding-right: 0;
+    padding-left: 10px;
+    border: 0;
+}
+input[type=submit]
+{
+    position: absolute;
+    top: 353px;
+    left: 138px;
+    background-color: #666666;
+    width: 121px;
+    height: 35px;
+    font-size: 11pt;
+    color: #999999;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+td
+{
+    text-align: center;
+    vertical-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+div.bg_white
+{
+    background-color: #FFFFFF;
+}
+div.bg_gray
+{
+    background-color: #EBEBEB;
+}
+div.header
+{
+    display: table;
+}
+span.header
+{
+    font-size: 8pt;
+    color: #999999;
+    text-align: left;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+span.error
+{
+    font-size: 8pt;
+    color: #CC6559;
+    text-align: left;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+span.small_btn
+{
+    font-size: 8pt;
+    color: #999999;
+    text-align: center;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.sign_up_box
+{
+    position: absolute;
+    top: 138px;
+    left: 445px;
+    width: 398px;
+    height: 447px;
+}
+
+div.page_title
+{
+    position: absolute;
+    top: 35px;
+    left: 83px;
+    width: 231px;
+    height: 38px;
+    text-align: center;
+    display: table;
+}
+span.page_title
+{
+    width: 231px;
+    height: 38px;
+    font-size: 18pt;
+    color: #999999;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.header_email
+{
+    position: absolute;
+    top: 100px;
+    left: 49px;
+    width: 299px;
+    height: 23px;
+}
+div.input_email
+{
+    position: absolute;
+    top: 122px;
+    left: 49px;
+    width: 299px;
+    height: 38px;
+}
+div.header_pw
+{
+    position: absolute;
+    top: 170px;
+    left: 49px;
+    width: 299px;
+    height: 23px;
+}
+div.input_pw
+{
+    position: absolute;
+    top: 192px;
+    left: 49px;
+    width: 299px;
+    height: 38px;
+}
+div.header_pw_confirm
+{
+    position: absolute;
+    top: 240px;
+    left: 49px;
+    width: 299px;
+    height: 23px;
+}
+div.input_pw_confirm
+{
+    position: absolute;
+    top: 263px;
+    left: 49px;
+    width: 299px;
+    height: 38px;
+}

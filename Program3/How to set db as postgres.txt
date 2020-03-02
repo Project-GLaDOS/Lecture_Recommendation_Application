@@ -1,0 +1,8 @@
+pip3 install psycopg2
+download postgres.app -> start server
+createdb db_name
+edit settings.py / DATABASES
+python manage.py migrate
+python manage.py makemigrations app_name
+python manage.py sqlmigrate app_name 0001
+python manage.py migrate

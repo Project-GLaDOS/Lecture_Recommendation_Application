@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'account/css/sign_in.css' %}">
+
+    <title>Sign In</title>
+</head>
+<body>
+<div class="bg_white sign_in_box">
+    <div class="bg_white page_title">
+        <span class="page_title">Program Title</span>
+    </div>
+
+    <form action="{% url 'account:sign_in' %}" method="post">
+        {% csrf_token %}
+
+        <div class="bg_white header header_email">
+            <span class="header">학교 메일</span>
+
+            {% if error_email %}
+            <span class="error">{{ error_email }}</span>
+            {% endif %}
+        </div>
+        <div class="bg_gray input_email">
+            <input type="text" name="user_email" value="{{ user_email }}">
+        </div>
+
+        <div class="bg_white header header_pw">
+            <span class="header">비밀번호</span>
+
+            {% if error_pw %}
+            <span class="error">{{ error_pw }}</span>
+            {% endif %}
+        </div>
+        <div class="bg_gray input_pw">
+            <input type="password" name="user_pw" value="{{ user_pw }}">
+        </div>
+        <input type="submit" value="로그인">
+    </form>
+
+    <div class="bg_white find_btns">
+        <table>
+            <tr>
+                <td>
+                    <div class="bg_white find_email_btn">
+                        <a href="{% url 'account:find_email' %}">
+                            <span class="small_btn find_email_btn">아이디 찾기</span>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="find_btns_seperation">
+                    </div>
+                </td>
+                <td>
+                    <div class="bg_white find_pw_btn">
+                        <a href="{% url 'account:find_password' %}">
+                            <span class="small_btn find_pw_btn">비밀번호 찾기</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bg_white sign_up_btn">
+        <a href="{% url 'account:show_sign_up' %}">
+            <span class="small_btn sign_up_btn">회원가입</span>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
