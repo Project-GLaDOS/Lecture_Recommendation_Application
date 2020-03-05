@@ -1,8 +1,10 @@
 import re
+from enum import Enum
 
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -10,29 +12,49 @@ from django.contrib import auth
 from .models import UserAccount
 
 
+class ErrorName(Enum):
+    email = 'error_email'
+    pw = 'error_pw'
+    pw_confirm = 'error_pw_confirm'
+
+
+class FormName(Enum):
+    email = 'user_email'
+    pw = 'user_pw'
+    pw_confirm = 'user_pw_confirm'
+
+
+class ErrorMessage(Enum):
+    email_empty = '메일을 입력해주세요'
+    email_invalid = '메일 형식이 잘못되었습니다'
+    email_exist = '이미 가입된 메일입니다'
+    sign_in_error = '메일 또는 비밀번호가 틀렸습니다'
+    pw_empty = '비밀번호를 입력해주세요'
+    pw_short = '비밀번호를 7자 이상 입력해주세요'
+    pw_confirm_empty = '비밀번호를 한 번 더 입력해주세요'
+    pw_confirm_wrong = '비밀번호가 일치하지 않습니다'
+
+
 def index(request):
     return render(request, 'account/sign_in.html', {})
 
 
 def sign_in(request):
-    email = request.POST['user_email']
-    pw = request.POST['user_pw']
+    email = request.POST[FormName.email.value]
+    pw = request.POST[FormName.pw.value]
 
-    if email == '':
-        return render_sign_in(request, 'error_email', '메일을 입력해주세요')
+    err_name, err_str = check_error(email, pw)
 
-    if not re.search("[0-9a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]+", email):
-        return render_sign_in(request, 'error_email', '메일 형식이 잘못되었습니다')
-
-    if pw == '':
-        return render_sign_in(request, 'error_pw', '비밀번호를 입력해주세요')
+    if err_name is not None:
+        return render_custom(request, err_name, err_str)
 
     user = auth.authenticate(request, username=email, password=pw)
     if user is not None:
         auth.login(request, user)
-        return HttpResponse("sign in succeed!!<br>id: %s" % request.POST['user_email'])
+        return HttpResponse("sign in succeed!!<br>id: %s" % request.POST[FormName.email.value])
     else:
-        return render_sign_in(request, 'error_email', '메일 또는 비밀번호가 틀렸습니다')
+        return render_custom(request, ErrorName.email.value, ErrorMessage.sign_in_error.value)
+        # check HttpRedirect
 
 
 def find_email(request):
@@ -48,56 +70,59 @@ def show_sign_up(request):
 
 
 def sign_up(request):
-    email = request.POST['user_email']
-    pw = request.POST['user_pw']
-    pw_confirm = request.POST['user_pw_confirm']
+    email = request.POST[FormName.email.value]
+    pw = request.POST[FormName.pw.value]
+    pw_confirm = request.POST[FormName.pw_confirm.value]
 
-    if email == '':
-        return render_sign_up(request, 'error_email', '메일을 입력해주세요')
+    err_name, err_str = check_error(email, pw, pw_confirm)
 
-    if not re.search("[0-9a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]+", email):
-        return render_sign_up(request, 'error_email', '메일 형식이 잘못되었습니다')
-
-    if pw == '':
-        return render_sign_up(request, 'error_pw', '비밀번호를 입력해주세요')
-
-    if not re.search(".{7}", pw):
-        return render_sign_up(request, 'error_pw', '비밀번호를 7자 이상 입력해주세요')
-
-    if pw_confirm == '':
-        return render_sign_up(request, 'error_pw_confirm', '비밀번호를 한 번 더 입력해주세요')
-
-    if pw != pw_confirm:
-        return render_sign_up(request, 'error_pw_confirm', '비밀번호가 일치하지 않습니다')
+    if err_name is not None:
+        return render_custom(request, err_name, err_str)
 
     try:
         User.objects.create_user(email, None, pw)
-        return HttpResponse("sign up succeed!!<br>id: %s" % request.POST['user_email'])
+        return HttpResponse("sign up succeed!!<br>id: %s" % request.POST[FormName.email.value])
     except IntegrityError:
-        return render_sign_up(request, 'error_email', '이미 가입된 메일입니다')
+        return render_custom(request, ErrorName.email.value, ErrorMessage.email_exist.value)
 
 
-def render_sign_in(request, err_name, err_str):
-    email = request.POST['user_email']
-    pw = request.POST['user_pw']
+def check_error(email, pw, pw_confirm=None):
+    if email == '':
+        return ErrorName.email.value, ErrorMessage.email_empty.value
+    if not re.search("[0-9a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]+", email):
+        return ErrorName.email.value, ErrorMessage.email_invalid.value
+    if pw == '':
+        return ErrorName.pw.value, ErrorMessage.pw_empty.value
+    if pw_confirm is not None:
+        if not re.search(".{7}", pw):
+            return ErrorName.pw.value, ErrorMessage.pw_short.value
+        if pw_confirm == '':
+            return ErrorName.pw_confirm.value, ErrorMessage.pw_confirm_empty.value
+        if pw != pw_confirm:
+            return ErrorName.pw_confirm.value, ErrorMessage.pw_confirm_wrong.value
+        else:
+            return None, None
+    else:
+        return None, None
 
-    return render(request, 'account/sign_in.html',
-                  {
-                      'user_email': email,
-                      'user_pw': pw,
-                      err_name: err_str
-                  })
 
+def render_custom(request, err_name, err_str):
+    email = request.POST[FormName.email.value]
+    pw = request.POST[FormName.pw.value]
+    try:
+        pw_confirm = request.POST[FormName.pw_confirm.value]
 
-def render_sign_up(request, err_name, err_str):
-    email = request.POST['user_email']
-    pw = request.POST['user_pw']
-    pw_confirm = request.POST['user_pw_confirm']
-
-    return render(request, 'account/sign_up.html',
-                  {
-                      'user_email': email,
-                      'user_pw': pw,
-                      'user_pw_confirm': pw_confirm,
-                      err_name: err_str
-                  })
+        return render(request, 'account/sign_up.html',
+                      {
+                          FormName.email.value: email,
+                          FormName.pw.value: pw,
+                          FormName.pw_confirm.value: pw_confirm,
+                          err_name: err_str
+                      })
+    except MultiValueDictKeyError:
+        return render(request, 'account/sign_in.html',
+                      {
+                          FormName.email.value: email,
+                          FormName.pw.value: pw,
+                          err_name: err_str
+                      })
